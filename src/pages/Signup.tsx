@@ -5,26 +5,38 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Link, useNavigate } from "react-router-dom";
-import { loginUser } from "../services/authService";
+import { registerUser } from "../services/authService";
 import { Loader2 } from "lucide-react";
 import { getFirebaseErrorMessage } from "@/lib/firebaseErrorUtils";
 
 import logo from '../assets/images/flowmate-logo.png';
 
-const Login = () => {
+const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (password !== confirmPassword) {
+      setError("Passwords don't match");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return;
+    }
+
     setLoading(true);
     setError("");
 
     try {
-      await loginUser(email, password);
+      await registerUser(email, password);
       navigate("/dashboard");
     } catch (error: any) {
       setError(getFirebaseErrorMessage(error));
@@ -37,20 +49,20 @@ const Login = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {/* Logo */}
-        {/* <div className="flex items-center justify-center">
-          <Link to="/" className="flex items-center">
+        {/* <div className="text-center mb-8">
+          <Link to="/" className="flex items-center space-x-2">
             <img
               src={logo}
               alt="flowmate logo"
-              className="w-40 h-38 rounded-lg object-contain"
+              className="w-8 h-8 rounded-lg object-contain"
             />
           </Link>
         </div> */}
 
         <Card className="shadow-lg">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl">Welcome back</CardTitle>
-            <CardDescription>Sign in to your FlowMate account</CardDescription>
+            <CardTitle className="text-2xl">Create your account</CardTitle>
+            <CardDescription>Get started with FlowMate today</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {/* Social Login */}
@@ -81,7 +93,7 @@ const Login = () => {
               </div>
             </div>
 
-            {/* Email Login Form */}
+            {/* Email Signup Form */}
             <form onSubmit={handleSubmit} className="space-y-4">
               {error && (
                 <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md">
@@ -101,39 +113,63 @@ const Login = () => {
                   disabled={loading}
                 />
               </div>
+
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
                 <Input
                   id="password"
                   type="password"
-                  placeholder="Enter your password"
+                  placeholder="Create a password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   disabled={loading}
+                  minLength={6}
                 />
               </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="confirmPassword">Confirm Password</Label>
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  placeholder="Confirm your password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                  disabled={loading}
+                  minLength={6}
+                />
+              </div>
+
               <Button
                 type="submit"
                 className="w-full bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700"
                 disabled={loading}
               >
                 {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {loading ? "Signing In..." : "Sign In"}
+                {loading ? "Creating Account..." : "Create Account"}
               </Button>
             </form>
 
             <div className="text-center">
-              <Link to="/forgot-password" className="text-sm text-blue-600 hover:underline">
-                Forgot your password?
-              </Link>
+              <p className="text-xs text-gray-500">
+                By creating an account, you agree to our{" "}
+                <Link to="/terms" className="text-blue-600 hover:underline">
+                  Terms of Service
+                </Link>{" "}
+                and{" "}
+                <Link to="/privacy" className="text-blue-600 hover:underline">
+                  Privacy Policy
+                </Link>
+              </p>
             </div>
           </CardContent>
           <CardFooter className="text-center">
             <p className="text-sm text-gray-600">
-              Don't have an account?{" "}
-              <Link to="/signup" className="text-blue-600 hover:underline font-medium">
-                Sign up
+              Already have an account?{" "}
+              <Link to="/login" className="text-blue-600 hover:underline font-medium">
+                Sign in
               </Link>
             </p>
           </CardFooter>
@@ -143,4 +179,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

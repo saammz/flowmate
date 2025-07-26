@@ -32,7 +32,7 @@ const Index = () => {
   const getPriceDisplay = (monthlyPrice: number) => {
     const price = getPrice(monthlyPrice);
     const formattedPrice = formatPrice(price);
-    
+
     if (billingPeriod === 'yearly') {
       return `$${formattedPrice}/year`;
     }
@@ -48,7 +48,7 @@ const Index = () => {
     },
     {
       icon: <Globe className="h-6 w-6" />,
-      title: "Universal Integration", 
+      title: "Universal Integration",
       description: "Currently supports Jira and Trello. ClickUp, Asana, and Monday.com coming soon!",
       gradient: "from-blue-400 to-cyan-500"
     },
@@ -135,7 +135,7 @@ const Index = () => {
 
   const testimonials = [
     {
-      quote: "Our sales team closed 30% more deals since using ProjectBot. No more switching between Slack, Salesforce, and WhatsApp.",
+      quote: "Our sales team closed 30% more deals since using FlowMate. No more switching between Slack, Salesforce, and WhatsApp.",
       author: "Sarah Chen",
       role: "VP of Sales",
       company: "TechFlow",
@@ -178,11 +178,8 @@ const Index = () => {
       <header className="relative border-b bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-3 group">
-            <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-green-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-              <span className="text-white font-bold text-lg">PB</span>
-            </div>
             <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
-              ProjectBot
+              FlowMate
             </span>
           </div>
           <nav className="hidden md:flex space-x-8">
@@ -219,11 +216,11 @@ const Index = () => {
               </span>
             </h1>
             <p className="text-2xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
-              Transform any WhatsApp group into a powerful project management hub. 
+              Transform any WhatsApp group into a powerful project management hub.
               Currently supports Jira and Trello, with Slack support coming soon!
             </p>
           </div>
-          
+
           <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16 animate-fade-in delay-200">
             <Link to="/dashboard">
               <Button size="lg" className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-xl px-10 py-4 rounded-xl hover:scale-105 transition-all duration-200 shadow-2xl hover:shadow-blue-200">
@@ -236,7 +233,7 @@ const Index = () => {
               <span className="ml-2">▶</span>
             </Button>
           </div>
-          
+
           {/* Demo Preview */}
           <div className="relative animate-fade-in delay-400">
             <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-3xl mx-auto border border-gray-100 hover:shadow-3xl transition-shadow duration-300">
@@ -302,7 +299,7 @@ const Index = () => {
               Built for Every Team
             </h2>
             <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4">
-              Manage and track your team's progress without leaving your main chat conversation. 
+              Manage and track your team's progress without leaving your main chat conversation.
               From WhatsApp (and soon Slack) to project tools - seamlessly.
             </p>
           </div>
@@ -359,7 +356,7 @@ const Index = () => {
                       {/* Bot Response */}
                       <div className="flex justify-start">
                         <div className="bg-gray-700 text-white rounded-2xl rounded-tl-md px-4 py-3 max-w-xs">
-                          <p className="text-xs font-medium mb-2 text-blue-400">ProjectBot</p>
+                          <p className="text-xs font-medium mb-2 text-blue-400">FlowMate</p>
                           <div className="text-sm whitespace-pre-line">
                             {useCase.example.response}
                           </div>
@@ -407,15 +404,15 @@ const Index = () => {
                       </div>
                       <div className="absolute inset-0 bg-white/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
-                    
+
                     <h3 className="text-xl font-bold mb-4 group-hover:text-blue-600 transition-colors duration-300">
                       {feature.title}
                     </h3>
-                    
+
                     <p className="text-gray-600 leading-relaxed flex-grow">
                       {feature.description}
                     </p>
-                    
+
                     <div className="mt-6 pt-4 border-t border-gray-100">
                       <div className="flex items-center space-x-2 text-sm text-gray-400 group-hover:text-blue-500 transition-colors duration-300">
                         <Sparkles className="h-4 w-4" />
@@ -438,28 +435,26 @@ const Index = () => {
               Simple, Fair Pricing
             </h2>
             <p className="text-xl text-gray-600 mb-8">Choose the perfect plan for your team's needs</p>
-            
+
             {/* Billing Period Toggle */}
             <div className="flex justify-center mb-6">
               <div className="bg-white rounded-2xl p-2 shadow-lg border border-gray-200">
                 <div className="flex space-x-1">
                   <button
                     onClick={() => setBillingPeriod('monthly')}
-                    className={`px-6 py-3 rounded-xl font-medium transition-all duration-200 ${
-                      billingPeriod === 'monthly'
-                        ? 'bg-gradient-to-r from-blue-600 to-green-600 text-white shadow-lg'
-                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-                    }`}
+                    className={`px-6 py-3 rounded-xl font-medium transition-all duration-200 ${billingPeriod === 'monthly'
+                      ? 'bg-gradient-to-r from-blue-600 to-green-600 text-white shadow-lg'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                      }`}
                   >
                     Monthly
                   </button>
                   <button
                     onClick={() => setBillingPeriod('yearly')}
-                    className={`px-6 py-3 rounded-xl font-medium transition-all duration-200 relative ${
-                      billingPeriod === 'yearly'
-                        ? 'bg-gradient-to-r from-blue-600 to-green-600 text-white shadow-lg'
-                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-                    }`}
+                    className={`px-6 py-3 rounded-xl font-medium transition-all duration-200 relative ${billingPeriod === 'yearly'
+                      ? 'bg-gradient-to-r from-blue-600 to-green-600 text-white shadow-lg'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                      }`}
                   >
                     Yearly
                     <span className="absolute -top-2 -right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full">
@@ -469,7 +464,7 @@ const Index = () => {
                 </div>
               </div>
             </div>
-            
+
           </div>
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {/* Free Plan */}
@@ -609,7 +604,7 @@ const Index = () => {
             <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-blue-700 bg-clip-text text-transparent">
               Loved by Teams Worldwide
             </h2>
-            <p className="text-xl text-gray-600">See what other teams are saying about ProjectBot</p>
+            <p className="text-xl text-gray-600">See what other teams are saying about FlowMate</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
@@ -640,7 +635,7 @@ const Index = () => {
           <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_20%,rgba(120,119,198,0.3),transparent_50%)]"></div>
           <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_70%_80%,rgba(34,197,94,0.3),transparent_50%)]"></div>
         </div>
-        
+
         <div className="relative container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-white mb-4">
@@ -651,7 +646,7 @@ const Index = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { number: "10K+", label: "Teams Using ProjectBot", icon: "👥", color: "from-blue-400 to-cyan-400" },
+              { number: "10K+", label: "Teams Using FlowMate", icon: "👥", color: "from-blue-400 to-cyan-400" },
               { number: "500K+", label: "Tasks Managed Daily", icon: "✅", color: "from-green-400 to-emerald-400" },
               { number: "40%", label: "Average Productivity Boost", icon: "📈", color: "from-purple-400 to-pink-400" },
               { number: "24/7", label: "Always Available", icon: "⚡", color: "from-orange-400 to-red-400" }
@@ -684,7 +679,7 @@ const Index = () => {
               Ready to Transform Your Team's Workflow?
             </h2>
             <p className="text-xl text-gray-600 mb-12 leading-relaxed">
-              Join thousands of teams who've streamlined their project management with ProjectBot. 
+              Join thousands of teams who've streamlined their project management with FlowMate.
               Start your free trial today and see the difference in minutes, not months.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
@@ -709,13 +704,13 @@ const Index = () => {
           <div className="grid md:grid-cols-5 gap-8 mb-12">
             <div className="md:col-span-2">
               <div className="flex items-center space-x-3 mb-6">
-                <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-green-600 rounded-xl flex items-center justify-center">
+                {/* <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-green-600 rounded-xl flex items-center justify-center">
                   <span className="text-white font-bold">PB</span>
-                </div>
-                <span className="text-2xl font-bold">ProjectBot</span>
+                </div> */}
+                <span className="text-2xl font-bold">FlowMate</span>
               </div>
               <p className="text-gray-400 text-lg leading-relaxed mb-6">
-                Transform any WhatsApp group into a powerful project management hub. 
+                Transform any WhatsApp group into a powerful project management hub.
                 Supports Jira & Trello, with Slack & more integrations coming soon.
               </p>
               <div className="flex space-x-4">
@@ -762,7 +757,7 @@ const Index = () => {
             </div>
           </div>
           <div className="border-t border-gray-800 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 ProjectBot. All rights reserved. Made with ❤️ for teams everywhere.</p>
+            <p>&copy; 2025 FlowMate. All rights reserved. Made with ❤️ for teams everywhere.</p>
           </div>
         </div>
       </footer>

@@ -4,16 +4,29 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { BarChart3, Users, Clock, CheckCircle, Settings, Plus, TrendingUp } from "lucide-react";
-import { Link } from "react-router-dom";
+import { BarChart3, Users, Clock, CheckCircle, Settings, Plus, TrendingUp, LogOut } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { logoutUser } from "../services/authService";
+import { useAuth } from "@/context/AuthContext";
+
+import logo from '../assets/images/flowmate-logo.png';
 
 const Dashboard = () => {
-  const [user] = useState({
-    name: "Sarah Chen",
-    email: "sarah@techflow.com",
-    avatar: "",
-    plan: "Pro"
-  });
+  const { userData, currentUser } = useAuth();
+  const [loggingOut, setLoggingOut] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    setLoggingOut(true);
+    try {
+      await logoutUser();
+      navigate("/login");
+    } catch (error) {
+      console.error("Error logging out:", error);
+    } finally {
+      setLoggingOut(false);
+    }
+  };
 
   const integrations = [
     { name: "Jira", status: "connected", icon: "🟦", lastSync: "2 minutes ago" },
@@ -35,6 +48,29 @@ const Dashboard = () => {
     { user: "Lisa Wang", action: "moved task", task: "Database optimization", time: "2 hours ago" }
   ];
 
+  // Get user's first name from email if userData doesn't have firstName
+  const getFirstName = () => {
+    if (userData?.firstName) {
+      return userData.firstName;
+    }
+    if (currentUser?.email) {
+      return currentUser.email.split('@')[0];
+    }
+    return "User";
+  };
+
+  // Get user initials for avatar
+  const getUserInitials = () => {
+    if (userData?.firstName && userData?.lastName) {
+      return `${userData.firstName[0]}${userData.lastName[0]}`;
+    }
+    if (currentUser?.email) {
+      const emailName = currentUser.email.split('@')[0];
+      return emailName.length >= 2 ? emailName.substring(0, 2).toUpperCase() : emailName[0].toUpperCase();
+    }
+    return "U";
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -43,32 +79,39 @@ const Dashboard = () => {
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-4">
               <Link to="/" className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-green-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">PB</span>
-                </div>
-                <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
-                  ProjectBot
+                <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
+                  FlowMate
                 </span>
               </Link>
               <Badge variant="secondary" className="bg-blue-100 text-blue-800">
-                {user.plan} Plan
+                Pro Plan
               </Badge>
             </div>
-            
+
             <div className="flex items-center space-x-4">
-              <Button variant="outline" size="sm">
-                <Plus className="h-4 w-4 mr-2" />
-                Add Integration
-              </Button>
+              <Link to="/bot">
+                <Button variant="outline" size="sm">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Admin
+                </Button>
+              </Link>
               <Link to="/settings">
                 <Button variant="ghost" size="sm">
                   <Settings className="h-4 w-4" />
                 </Button>
               </Link>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleLogout}
+                disabled={loggingOut}
+              >
+                <LogOut className="h-4 w-4" />
+              </Button>
               <Avatar>
-                <AvatarImage src={user.avatar} />
+                <AvatarImage src="" />
                 <AvatarFallback className="bg-gradient-to-r from-blue-600 to-green-600 text-white">
-                  {user.name.split(' ').map(n => n[0]).join('')}
+                  {getUserInitials()}
                 </AvatarFallback>
               </Avatar>
             </div>
@@ -79,7 +122,7 @@ const Dashboard = () => {
       <div className="max-w-7xl mx-auto p-6">
         {/* Welcome Section */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Welcome back, {user.name.split(' ')[0]}! 👋</h1>
+          <h1 className="text-3xl font-bold mb-2">Welcome back, {getFirstName()}! 👋</h1>
           <p className="text-gray-600">Here's what's happening with your team today.</p>
         </div>
 
@@ -123,7 +166,7 @@ const Dashboard = () => {
                       <p className="text-sm text-gray-500">Last sync: {integration.lastSync}</p>
                     </div>
                   </div>
-                  <Badge 
+                  <Badge
                     variant={integration.status === 'connected' ? 'default' : 'secondary'}
                     className={integration.status === 'connected' ? 'bg-green-100 text-green-800' : ''}
                   >
@@ -181,7 +224,7 @@ const Dashboard = () => {
                 <span className="text-sm text-gray-500">1,420 / 2,000 limit</span>
               </div>
               <Progress value={71} className="h-2" />
-              
+
               <div className="flex justify-between items-center pt-4">
                 <span className="text-sm font-medium">Team Members</span>
                 <span className="text-sm text-gray-500">12 / 25 limit</span>
@@ -196,7 +239,7 @@ const Dashboard = () => {
           <CardHeader>
             <CardTitle className="text-blue-900">🚀 Quick Setup Guide</CardTitle>
             <CardDescription className="text-blue-700">
-              Get your team up and running with ProjectBot in minutes
+              Get your team up and running with FlowMate in minutes
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -204,7 +247,7 @@ const Dashboard = () => {
               <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
                 <CheckCircle className="h-4 w-4 text-white" />
               </div>
-              <span className="text-sm text-blue-900">Create your ProjectBot account</span>
+              <span className="text-sm text-blue-900">Create your FlowMate account</span>
             </div>
             <div className="flex items-center space-x-3">
               <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
@@ -216,7 +259,7 @@ const Dashboard = () => {
               <div className="w-6 h-6 bg-gray-300 rounded-full flex items-center justify-center text-gray-600">
                 3
               </div>
-              <span className="text-sm">Add ProjectBot to your WhatsApp group</span>
+              <span className="text-sm">Add FlowMate to your WhatsApp group</span>
               <Button size="sm" variant="outline">
                 Get Instructions
               </Button>

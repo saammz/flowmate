@@ -16,7 +16,7 @@ const WhatsAppBotClient = () => {
 
   const socketRef = useRef(null);
 
-  const SERVER_URL = "http://3.84.52.42";
+  const SERVER_URL = import.meta.env.VITE_API_SERVER_URL;
 
   useEffect(() => {
     // Initialize socket connection
@@ -311,12 +311,12 @@ const WhatsAppBotClient = () => {
   return (
     <div className="min-h-screen bg-gray-100 p-5">
       <div className="max-w-6xl mx-auto bg-white p-5 rounded-lg shadow-lg">
-        <h1 className="text-2xl font-bold mb-5">🤖 ProjectBot WebSocket Client - Debug Version</h1>
+        <h1 className="text-2xl font-bold mb-5">🤖 FlowMate WebSocket Client - Debug Version</h1>
 
         {/* Status */}
         <div className={`p-3 mb-3 rounded font-bold ${status.className === 'connected' ? 'bg-green-100 text-green-800' :
-            status.className === 'disconnected' ? 'bg-red-100 text-red-800' :
-              'bg-yellow-100 text-yellow-800'
+          status.className === 'disconnected' ? 'bg-red-100 text-red-800' :
+            'bg-yellow-100 text-yellow-800'
           }`}>
           {status.text}
         </div>
@@ -431,9 +431,9 @@ const WhatsAppBotClient = () => {
             <div
               key={message.id}
               className={`mb-2 p-2 bg-white rounded border-l-4 text-sm ${message.type === 'error' ? 'border-red-500 bg-red-50' :
-                  message.type === 'success' ? 'border-green-500 bg-green-50' :
-                    message.type === 'warning' ? 'border-yellow-500 bg-yellow-50' :
-                      'border-blue-500 bg-blue-50'
+                message.type === 'success' ? 'border-green-500 bg-green-50' :
+                  message.type === 'warning' ? 'border-yellow-500 bg-yellow-50' :
+                    'border-blue-500 bg-blue-50'
                 }`}
             >
               <strong>{message.timestamp}</strong> - {message.text}

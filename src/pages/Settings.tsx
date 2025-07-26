@@ -73,7 +73,7 @@ const SettingsPage = () => {
                     <p className="text-sm text-gray-500">JPG, PNG up to 2MB</p>
                   </div>
                 </div>
-                
+
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="firstName">First Name</Label>
@@ -84,12 +84,12 @@ const SettingsPage = () => {
                     <Input id="lastName" defaultValue="Chen" />
                   </div>
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
                   <Input id="email" type="email" defaultValue="sarah@techflow.com" />
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="company">Company</Label>
                   <Input id="company" defaultValue="TechFlow" />
@@ -112,29 +112,29 @@ const SettingsPage = () => {
                     <Label>Email Notifications</Label>
                     <p className="text-sm text-gray-500">Receive email updates about your projects</p>
                   </div>
-                  <Switch 
+                  <Switch
                     checked={notifications.email}
                     onCheckedChange={(checked) => setNotifications(prev => ({ ...prev, email: checked }))}
                   />
                 </div>
-                
+
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
                     <Label>Push Notifications</Label>
                     <p className="text-sm text-gray-500">Get push notifications in your browser</p>
                   </div>
-                  <Switch 
+                  <Switch
                     checked={notifications.push}
                     onCheckedChange={(checked) => setNotifications(prev => ({ ...prev, push: checked }))}
                   />
                 </div>
-                
+
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
                     <Label>WhatsApp Updates</Label>
                     <p className="text-sm text-gray-500">Receive important updates via WhatsApp</p>
                   </div>
-                  <Switch 
+                  <Switch
                     checked={notifications.whatsapp}
                     onCheckedChange={(checked) => setNotifications(prev => ({ ...prev, whatsapp: checked }))}
                   />
@@ -205,7 +205,7 @@ const SettingsPage = () => {
             <Card>
               <CardHeader>
                 <CardTitle>WhatsApp Bot Setup</CardTitle>
-                <CardDescription>Instructions to add ProjectBot to your WhatsApp groups</CardDescription>
+                <CardDescription>Instructions to add FlowMate to your WhatsApp groups</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="bg-blue-50 p-4 rounded-lg">
@@ -216,13 +216,13 @@ const SettingsPage = () => {
                     <Button variant="outline" size="sm">Copy</Button>
                   </div>
                 </div>
-                
+
                 <div className="space-y-2">
                   <h4 className="font-medium">Setup Instructions:</h4>
                   <ol className="list-decimal list-inside space-y-1 text-sm text-gray-600">
                     <li>Add +1 (555) 123-PROJ to your WhatsApp contacts</li>
                     <li>Create or open your team's WhatsApp group</li>
-                    <li>Add ProjectBot to the group as a participant</li>
+                    <li>Add FlowMate to the group as a participant</li>
                     <li>Send "@bot help" to see available commands</li>
                   </ol>
                 </div>
@@ -264,9 +264,9 @@ const SettingsPage = () => {
                     </div>
                   ))}
                 </div>
-                
+
                 <Separator className="my-6" />
-                
+
                 <div className="space-y-4">
                   <h4 className="font-medium">Invite New Member</h4>
                   <div className="flex space-x-2">
@@ -296,7 +296,7 @@ const SettingsPage = () => {
                   </div>
                   <Badge className="bg-blue-600 text-white">Current Plan</Badge>
                 </div>
-                
+
                 <div className="grid grid-cols-2 gap-4">
                   <div className="text-center p-4 border rounded-lg">
                     <div className="text-2xl font-bold">12</div>
@@ -309,7 +309,7 @@ const SettingsPage = () => {
                     <div className="text-xs text-gray-400">of 3 limit</div>
                   </div>
                 </div>
-                
+
                 <div className="flex space-x-4">
                   <Button variant="outline">Change Plan</Button>
                   <Button variant="outline">Cancel Subscription</Button>
@@ -335,7 +335,7 @@ const SettingsPage = () => {
                   </div>
                   <Button variant="outline" size="sm">Update</Button>
                 </div>
-                
+
                 <Button variant="outline">
                   Add Payment Method
                 </Button>
@@ -368,9 +368,9 @@ const SettingsPage = () => {
                     Update Password
                   </Button>
                 </div>
-                
+
                 <Separator />
-                
+
                 <div className="space-y-4">
                   <h4 className="font-medium">Two-Factor Authentication</h4>
                   <p className="text-sm text-gray-600">Add an extra layer of security to your account</p>
