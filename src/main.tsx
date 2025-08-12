@@ -1,14 +1,17 @@
-import { createRoot } from 'react-dom/client'
 import React from 'react'
+import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
-import App from './App.tsx'
+import { store } from './store/store'
+import { AuthProvider } from './context/AuthContext'
+import App from './App'
 import './index.css'
-import {store} from "./store/store"
 
-createRoot(document.getElementById("root")!).render(
-<React.StrictMode>
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </Provider>
   </React.StrictMode>,
-);
+)

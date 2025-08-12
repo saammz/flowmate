@@ -4,7 +4,6 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  AuthError,
 } from "firebase/auth";
 import { auth } from "../../config/firebase";
 
@@ -28,7 +27,6 @@ export const authApi = createApi({
   baseQuery,
   tagTypes: ["User"],
   endpoints: (builder) => ({
-    
     // register user
     registerUser: builder.mutation<
       AuthResponse,
@@ -57,23 +55,31 @@ export const authApi = createApi({
 
           const idToken = await firebaseUser.getIdToken();
 
-          const response = await fetch(
-            `${import.meta.env.VITE_API_BASE_URL}/users/register`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${idToken}`,
-              },
-              body: JSON.stringify({}),
-            }
-          );
+          const apiUrl = import.meta.env.VITE_API_BASE_URL;
+
+          console.log("Api base url", apiUrl);
+
+          const response = await fetch(`${apiUrl}users/register`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${idToken}`,
+            },
+            body: JSON.stringify({}),
+          });
 
           if (!response.ok) {
             const errorData = await response.text();
-            console.error("Backend registration failed:", errorData);
+            console.error("Backend registration failed:", {
+              status: response.status,
+              statusText: response.statusText,
+              error: errorData,
+              url: response.url,
+            });
+
             throw new Error(`Backend registration failed: ${response.status}`);
           }
+
 
           const userData = await response.json();
 
@@ -90,7 +96,7 @@ export const authApi = createApi({
               error: {
                 status: "FIREBASE_ERROR",
                 data: error.code,
-                message: error.message
+                message: error.message,
               },
             };
           }
@@ -106,6 +112,7 @@ export const authApi = createApi({
       invalidatesTags: ["User"],
     }),
 
+    // sign in endpoint
     loginUser: builder.mutation<
       AuthResponse,
       { email: string; password: string }
@@ -116,12 +123,11 @@ export const authApi = createApi({
             throw new Error("Email and password are required");
           }
 
-          if (!email.includes('@')) {
+          if (!email.includes("@")) {
             throw new Error("Please enter a valid email address");
           }
 
           console.log("Attempting to login user with email:", email);
-          console.log("Password length:", password.length);
 
           const userCredential = await signInWithEmailAndPassword(
             auth,
@@ -132,43 +138,23 @@ export const authApi = createApi({
 
           console.log("Firebase login successful:", firebaseUser.uid);
 
-          const idToken = await firebaseUser.getIdToken();
-
-          const response = await fetch(
-            `${import.meta.env.VITE_API_BASE_URL}/users/getUser`,
-            {
-              method: "GET",
-              headers: {
-                Authorization: `Bearer ${idToken}`,
-              },
-            }
-          );
-
-          if (!response.ok) {
-            const errorData = await response.text();
-            console.error("Backend user fetch failed:", errorData);
-            throw new Error(`Failed to get user data: ${response.status}`);
-          }
-
-          const userData = await response.json();
-
           return {
             data: {
               firebaseUser,
-              userData,
+              userData: null,
             },
           };
-        } catch (error: any) {
+        } catch (error) {
           console.error("Login error:", error);
           console.error("Error code:", error.code);
           console.error("Error message:", error.message);
-          
+
           if (error.code) {
             return {
               error: {
                 status: "FIREBASE_ERROR",
                 data: error.code,
-                message: error.message
+                message: error.message,
               },
             };
           }
@@ -184,9 +170,16 @@ export const authApi = createApi({
       invalidatesTags: ["User"],
     }),
 
+
     // Get current user data
     getCurrentUser: builder.query<UserData, void>({
-      query: () => "/users/getUser",
+      query: () => {
+        if (!auth.currentUser) return
+
+        const apiUrl = import.meta.env.VITE_API_BASE_URL;
+        console.log("Fetching user data from:", `${apiUrl}/users/getUser`);
+        return "/users/getUser";
+      },
       providesTags: ["User"],
     }),
 

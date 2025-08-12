@@ -22,31 +22,32 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLocalError("");
-
+  
     if (!email.trim() || !password.trim()) {
       setLocalError("Please fill in all fields");
       return;
     }
-
+  
     if (!email.includes('@')) {
       setLocalError("Please enter a valid email address");
       return;
     }
-
+  
     console.log("Submitting login form:", { email: email.trim(), passwordLength: password.length });
-
+  
     try {
       const result = await loginUser({
         email: email.trim(),
         password: password
       }).unwrap();
-
+  
       console.log("Login successful:", result);
       toast.success("Login successful!");
+      
       navigate("/dashboard");
     } catch (error) {
       console.error("Login failed:", error);
-
+  
       if (error.status === "FIREBASE_ERROR") {
         const firebaseError = getFirebaseErrorMessage({ code: error.data });
         setLocalError(firebaseError);
@@ -58,6 +59,7 @@ const Login = () => {
       }
     }
   };
+
 
   const getErrorMessage = () => {
     if (localError) return localError;
@@ -71,6 +73,7 @@ const Login = () => {
     }
     return null;
   };
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 flex items-center justify-center p-4">

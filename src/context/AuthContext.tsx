@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { auth } from '../config/firebase';
-import { useGetCurrentUserQuery } from '../store/api/authApi';
 
 interface UserData {
   _id: string;
@@ -25,44 +24,44 @@ const defaultContextValue: AuthContextType = {
   loading: true
 };
 
+interface AuthProviderProps {
+  children: React.ReactNode;
+}
+
+
 const AuthContext = createContext<AuthContextType>(defaultContextValue);
 
 export const useAuth = () => {
   return useContext(AuthContext);
 };
 
-interface AuthProviderProps {
-  children: React.ReactNode;
-}
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [authLoading, setAuthLoading] = useState(true);
-
-  const { 
-    data: userData, 
-    isLoading: userDataLoading,
-    refetch 
-  } = useGetCurrentUserQuery(undefined, {
-    skip: !currentUser,
-  });
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [loading,setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      console.log('Auth state changed:', user?.uid);
       setCurrentUser(user);
+      
       if (user) {
-        refetch();
+        setUserData(null); 
+      } else {
+        setUserData(null);
       }
-      setAuthLoading(false);
+      setLoading(false);
     });
 
     return unsubscribe;
-  }, [refetch]);
+  }, []);
+
 
   const value: AuthContextType = {
     currentUser,
-    userData: userData || null,
-    loading: authLoading || (currentUser ? userDataLoading : false)
+    userData,
+    loading
   };
 
   return (
