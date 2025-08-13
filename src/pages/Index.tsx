@@ -4,9 +4,12 @@ import { Badge } from "@/components/ui/badge";
 import { Check, Users, Clock, BarChart3, Zap, Globe, MessageSquare, Target, TrendingUp, Shield, ArrowRight, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { BetaSignupModal } from "@/components/beta-tester-modal";
+import Navbar from "@/components/navbar";
 
 const Index = () => {
   const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'yearly'>('monthly');
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const pricing = {
     symbol: '$',
@@ -167,68 +170,40 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-green-50/30 overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-green-50/30 overflow-hidden scroll-smooth">
       {/* Animated background elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-green-400/20 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-green-400/20 to-blue-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
-
-      {/* Header */}
-      <header className="relative border-b bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center space-x-3 group">
-            <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
-              FlowMate
-            </span>
-          </div>
-          <nav className="hidden md:flex space-x-8">
-            <a href="#features" className="text-gray-600 hover:text-blue-600 transition-colors duration-200 hover:scale-105 transform">Features</a>
-            <a href="#teams" className="text-gray-600 hover:text-blue-600 transition-colors duration-200 hover:scale-105 transform">For Teams</a>
-            <a href="#pricing" className="text-gray-600 hover:text-blue-600 transition-colors duration-200 hover:scale-105 transform">Pricing</a>
-            <a href="#testimonials" className="text-gray-600 hover:text-blue-600 transition-colors duration-200 hover:scale-105 transform">Reviews</a>
-          </nav>
-          <div className="flex space-x-3">
-            <Link to="/login">
-              <Button variant="outline" size="sm" className="hover:scale-105 transition-transform duration-200">Login</Button>
-            </Link>
-            <Link to="/dashboard">
-              <Button size="sm" className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl">
-                Start Free Trial
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </header>
+      <Navbar />
 
       {/* Hero Section */}
       <section className="relative container mx-auto px-4 py-24 text-center">
         <div className="max-w-5xl mx-auto">
           <div className="animate-fade-in">
-            <Badge className="mb-6 px-4 py-2 bg-gradient-to-r from-blue-100 to-green-100 text-blue-700 border-0 hover:scale-105 transition-transform duration-200">
-              ✨ Trusted by 10,000+ teams worldwide
-            </Badge>
-            <h1 className="text-6xl md:text-7xl font-bold mb-8 bg-gradient-to-r from-gray-900 via-blue-700 to-green-600 bg-clip-text text-transparent leading-tight">
+            <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold mt- md:mt-6 mb-8 bg-gradient-to-r from-gray-900 via-blue-700 to-green-600 bg-clip-text text-transparent leading-tight">
               Project Management
-              <br />
+              <br className="hidden md:block" /> {" "}
               <span className="bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
                 Made Simple
               </span>
             </h1>
-            <p className="text-2xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+            <p className="md:text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
               Transform any WhatsApp group into a powerful project management hub.
               Currently supports Jira and Trello, with Slack support coming soon!
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16 animate-fade-in delay-200">
-            <Link to="/dashboard">
-              <Button size="lg" className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-xl px-10 py-4 rounded-xl hover:scale-105 transition-all duration-200 shadow-2xl hover:shadow-blue-200">
-                Start Free Trial
-                <span className="ml-2">→</span>
-              </Button>
-            </Link>
-            <Button variant="outline" size="lg" className="text-xl px-10 py-4 rounded-xl hover:scale-105 transition-all duration-200 border-2 hover:border-blue-300 hover:bg-blue-50">
+            <Button
+              size="sm"
+              className="text-lg md:w-64  bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
+              onClick={() => setIsModalOpen(true)}
+            >
+              Join Beta Test
+            </Button>
+            <Button variant="outline" size="lg" className="text-lg md:w-64 px-10 py-4 rounded-xl hover:scale-105 transition-all duration-200 border-2 hover:border-blue-300 hover:bg-blue-50">
               Watch Demo
               <span className="ml-2">▶</span>
             </Button>
@@ -292,7 +267,7 @@ const Index = () => {
       </section>
 
       {/* Built for Every Team Section - New Clean Design */}
-      <section id="teams" className="py-16 md:py-24 bg-white relative overflow-hidden">
+      <section id="teams" className="py-16 md:py-24 bg-white relative overflow-hidden scroll-smooth">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12 md:mb-20">
             <h2 className="text-3xl md:text-5xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-gray-900 to-blue-700 bg-clip-text text-transparent">
@@ -384,7 +359,7 @@ const Index = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-blue-50/30 to-green-50/30"></div>
         <div className="container mx-auto px-4 relative">
           <div className="text-center mb-20">
-            <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-green-700 bg-clip-text text-transparent">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-green-700 bg-clip-text text-transparent">
               Everything You Need
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -431,7 +406,7 @@ const Index = () => {
       <section id="pricing" className="py-24 bg-gradient-to-br from-gray-50 to-green-50/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-20">
-            <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-green-700 bg-clip-text text-transparent">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-green-700 bg-clip-text text-transparent">
               Simple, Fair Pricing
             </h2>
             <p className="text-xl text-gray-600 mb-8">Choose the perfect plan for your team's needs</p>
@@ -495,8 +470,12 @@ const Index = () => {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button className="w-full hover:scale-105 transition-transform duration-200" variant="outline">
-                  Get Started Free
+                <Button
+                  size="sm"
+                  className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl w-full"
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  Join Beta Test
                 </Button>
               </CardFooter>
             </Card>
@@ -543,8 +522,12 @@ const Index = () => {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button className="w-full bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 hover:scale-105 transition-all duration-200 shadow-lg">
-                  Start Pro Trial
+                <Button
+                  size="sm"
+                  className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl w-full"
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  Join Beta Test
                 </Button>
               </CardFooter>
             </Card>
@@ -588,8 +571,12 @@ const Index = () => {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button className="w-full hover:scale-105 transition-transform duration-200" variant="outline">
-                  Contact Sales
+                <Button
+                  size="sm"
+                  className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl w-full"
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  Join Beta Test
                 </Button>
               </CardFooter>
             </Card>
@@ -601,7 +588,7 @@ const Index = () => {
       <section id="testimonials" className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-20">
-            <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-blue-700 bg-clip-text text-transparent">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-blue-700 bg-clip-text text-transparent">
               Loved by Teams Worldwide
             </h2>
             <p className="text-xl text-gray-600">See what other teams are saying about FlowMate</p>
@@ -638,7 +625,7 @@ const Index = () => {
 
         <div className="relative container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
               Transforming Teams Worldwide
             </h2>
             <p className="text-blue-200 text-lg">Real impact, measurable results</p>
@@ -675,7 +662,7 @@ const Index = () => {
       <section className="py-24 bg-gradient-to-br from-gray-50 to-blue-50/30">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-5xl font-bold mb-8 bg-gradient-to-r from-gray-900 to-blue-700 bg-clip-text text-transparent">
+            <h2 className="text-3xl md:text-5xl font-bold mb-8 bg-gradient-to-r from-gray-900 to-blue-700 bg-clip-text text-transparent">
               Ready to Transform Your Team's Workflow?
             </h2>
             <p className="text-xl text-gray-600 mb-12 leading-relaxed">
@@ -684,9 +671,12 @@ const Index = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link to="/dashboard">
-                <Button size="lg" className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-xl px-12 py-4 rounded-xl hover:scale-105 transition-all duration-200 shadow-2xl hover:shadow-blue-200">
-                  Start Your Free Trial Today
-                  <span className="ml-2">→</span>
+                <Button
+                  size="sm"
+                  className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  Join Beta Test
                 </Button>
               </Link>
               <Button variant="outline" size="lg" className="text-xl px-12 py-4 rounded-xl hover:scale-105 transition-all duration-200 border-2">
@@ -760,7 +750,9 @@ const Index = () => {
             <p>&copy; 2025 FlowMate. All rights reserved. Made with ❤️ for teams everywhere.</p>
           </div>
         </div>
+
       </footer>
+      <BetaSignupModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 };
