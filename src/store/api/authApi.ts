@@ -22,6 +22,10 @@ export interface AuthResponse {
   userData: UserData;
 }
 
+export interface LoginResponse {
+  firebaseUser: any;
+}
+
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery,
@@ -89,22 +93,34 @@ export const authApi = createApi({
               userData,
             },
           };
-        } catch (error) {
+        } catch (error: unknown) {
           console.error("Registration error:", error);
-          if (error.code) {
+          if (
+            typeof error === "object" &&
+            error !== null &&
+            "code" in error &&
+            "message" in error
+          ) {
             return {
               error: {
-                status: "FIREBASE_ERROR",
-                data: error.code,
-                message: error.message,
+                status: "CUSTOM_ERROR",
+                data: {
+                  code: (error as { code: string }).code,
+                  message: (error as { message: string }).message,
+                },
               },
             };
+          }
+
+          let errorMessage = "Registration failed";
+          if (error instanceof Error) {
+            errorMessage = error.message;
           }
 
           return {
             error: {
               status: "CUSTOM_ERROR",
-              data: error.message || "Registration failed",
+              data: errorMessage,
             },
           };
         }
@@ -114,7 +130,7 @@ export const authApi = createApi({
 
     // sign in endpoint
     loginUser: builder.mutation<
-      AuthResponse,
+      LoginResponse,
       { email: string; password: string }
     >({
       queryFn: async ({ email, password }) => {
@@ -141,28 +157,36 @@ export const authApi = createApi({
           return {
             data: {
               firebaseUser,
-              userData: null,
             },
           };
-        } catch (error) {
+        } catch (error: unknown) {
           console.error("Login error:", error);
-          console.error("Error code:", error.code);
-          console.error("Error message:", error.message);
-
-          if (error.code) {
+          if (
+            typeof error === "object" &&
+            error !== null &&
+            "code" in error &&
+            "message" in error
+          ) {
             return {
               error: {
-                status: "FIREBASE_ERROR",
-                data: error.code,
-                message: error.message,
+                status: "CUSTOM_ERROR",
+                data: {
+                  code: (error as { code: string }).code,
+                  message: (error as { message: string }).message,
+                },
               },
             };
+          }
+
+          let errorMessage = "Login failed";
+          if (error instanceof Error) {
+            errorMessage = error.message;
           }
 
           return {
             error: {
               status: "CUSTOM_ERROR",
-              data: error.message || "Login failed",
+              data: errorMessage,
             },
           };
         }
@@ -189,11 +213,15 @@ export const authApi = createApi({
         try {
           await signOut(auth);
           return { data: undefined };
-        } catch (error) {
+        } catch (error: unknown) {
+          let errorMessage = "Logout failed";
+          if (error instanceof Error) {
+            errorMessage = error.message;
+          }
           return {
             error: {
               status: "CUSTOM_ERROR",
-              data: error.message || "Logout failed",
+              data: errorMessage,
             },
           };
         }
