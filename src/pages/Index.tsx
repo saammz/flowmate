@@ -755,14 +755,20 @@ const Index = () => {
                 Supports Jira & Trello, with Slack & more integrations coming soon.
               </p>
               <div className="flex space-x-4">
-                <div className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors cursor-pointer">
-                  <span className="text-sm">TW</span>
+                <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors cursor-pointer">
+                  <Link to={"https://x.com/flomate_ai?s=11"}>
+                    <img src={"/x.png"} alt="Checkout our twitter account" />
+                  </Link>
                 </div>
-                <div className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors cursor-pointer">
-                  <span className="text-sm">LI</span>
+                <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors cursor-pointer">
+                  <Link to={"https://www.linkedin.com/company/flow-mate/"}>
+                    <img src={"/linkedin.png"} alt="Checkout our linkedin account" />
+                  </Link>
                 </div>
-                <div className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors cursor-pointer">
-                  <span className="text-sm">GH</span>
+                <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors cursor-pointer">
+                  <Link to={"https://www.instagram.com/flowmate_ai?igsh=emRiY2k2N2lvZW40"}>
+                    <img src={"/insta.png"} alt="Checkout our instagram account" />
+                  </Link>
                 </div>
               </div>
             </div>
