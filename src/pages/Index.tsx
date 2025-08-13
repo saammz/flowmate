@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Check, Users, Clock, BarChart3, Zap, Globe, MessageSquare, Target, TrendingUp, Shield, ArrowRight, Sparkles } from "lucide-react";
+import { Check, Users, Clock, BarChart3, Zap, Globe, MessageSquare, Target, TrendingUp, Shield, ArrowRight, Sparkles, PlugZap } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { BetaSignupModal } from "@/components/beta-tester-modal";
 import Navbar from "@/components/navbar";
+import { title } from "process";
 
 const Index = () => {
   const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'yearly'>('monthly');
@@ -42,43 +43,46 @@ const Index = () => {
     return `$${formattedPrice}/month`;
   };
 
+  const steps = [
+    {
+      icon: <PlugZap className="h-6 w-6" />,
+      title: "Connect WhatsApp & Tools",
+      description: "Link your WhatsApp group to Jira, Trello, and more",
+      gradient: "from-blue-400 to-cyan-500"
+    },
+    {
+      icon: <PlugZap className="h-6 w-6" />,
+      title: "Use Simple Commands",
+      description: "@bot to update tasks, get status, or approve work.",
+      gradient: "from-blue-400 to-cyan-500"
+    },
+    {
+      icon: <PlugZap className="h-6 w-6" />,
+      title: "See Results Instantly",
+      description: "Project updates without leaving your chat",
+      gradient: "from-purple-400 to-pink-500"
+    }
+  ]
+
   const features = [
     {
       icon: <MessageSquare className="h-6 w-6" />,
-      title: "WhatsApp Native",
-      description: "Works seamlessly in your existing WhatsApp groups - no new apps to learn or download",
+      title: "Stay in Your Flow",
+      description: "No switching apps, zero learning curve.",
       gradient: "from-green-400 to-emerald-500"
     },
     {
       icon: <Globe className="h-6 w-6" />,
-      title: "Universal Integration",
-      description: "Currently supports Jira and Trello. ClickUp, Asana, and Monday.com coming soon!",
+      title: "Real-Time Clarity",
+      description: "Updates, approvals, and analytics in seconds",
       gradient: "from-blue-400 to-cyan-500"
     },
     {
       icon: <Clock className="h-6 w-6" />,
-      title: "Instant Updates",
-      description: "Get real-time notifications on project progress, deadlines, and team activities",
+      title: "Works With Your Stack",
+      description: " Jira, Trello, soon Slack, Asana, Monday",
       gradient: "from-purple-400 to-pink-500"
     },
-    {
-      icon: <BarChart3 className="h-6 w-6" />,
-      title: "Smart Analytics",
-      description: "Track team performance, project health, and productivity insights in one dashboard",
-      gradient: "from-orange-400 to-red-500"
-    },
-    {
-      icon: <Zap className="h-6 w-6" />,
-      title: "Zero Learning Curve",
-      description: "Simple @bot commands that anyone can master in minutes - no training sessions needed",
-      gradient: "from-yellow-400 to-orange-500"
-    },
-    {
-      icon: <Shield className="h-6 w-6" />,
-      title: "Enterprise Ready",
-      description: "Bank-level security with SOC2 compliance and advanced permission controls",
-      gradient: "from-indigo-400 to-purple-500"
-    }
   ];
 
   const useCases = [
@@ -182,16 +186,15 @@ const Index = () => {
       <section className="relative container mx-auto px-4 py-24 text-center">
         <div className="max-w-5xl mx-auto">
           <div className="animate-fade-in">
-            <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold mt- md:mt-6 mb-8 bg-gradient-to-r from-gray-900 via-blue-700 to-green-600 bg-clip-text text-transparent leading-tight">
-              Project Management
-              <br className="hidden md:block" /> {" "}
+            <h1 className="flex flex-col md:gap-2 lg:gap-4 text-3xl md:text-4xl lg:text-5xl font-bold md:mt-6 mb-6 bg-gradient-to-r from-gray-900 via-blue-700 to-green-600 bg-clip-text text-transparent text-center leading-tight">
+              <span>WhatsApp Team Collaboration</span>
+              {/* <br className="hidden md:block" /> {" "} */}
               <span className="bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
-                Made Simple
+                Effortless, Real-Time, Robust.
               </span>
             </h1>
-            <p className="md:text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
-              Transform any WhatsApp group into a powerful project management hub.
-              Currently supports Jira and Trello, with Slack support coming soon!
+            <p className="md:text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed text-center">
+              Turn any WhatsApp group into an all-in-one project workspace. Integrates with Jira and Trello <br />(Slack integration coming soon).
             </p>
           </div>
 
@@ -260,6 +263,54 @@ const Index = () => {
                   <span className="text-white text-xs font-bold">{company.initial}</span>
                 </div>
                 <span className="font-semibold text-gray-600">{company.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* how it works */}
+      <section id="features" className="py-24 bg-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-50/30 to-green-50/30"></div>
+        <div className="container mx-auto px-4 relative">
+          <div className="text-center mb-20">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-green-700 bg-clip-text text-transparent">
+              How it works
+            </h2>
+            <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4">
+              Get started with 3 simple steps
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            {steps.map((step, index) => (
+              <div key={index} className="group relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-green-600/10 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
+                <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 h-full">
+                  <div className="flex flex-col h-full">
+                    <div className={`w-16 h-16 bg-gradient-to-r ${step.gradient} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg relative`}>
+                      <div className="text-white relative z-10">
+                        {step.icon}
+                      </div>
+                      <div className="absolute inset-0 bg-white/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+
+                    <h3 className="text-xl font-bold mb-4 group-hover:text-blue-600 transition-colors duration-300">
+                      {step.title}
+                    </h3>
+
+                    <p className="text-gray-600 leading-relaxed flex-grow">
+                      {step.description}
+                    </p>
+
+                    <div className="mt-6 pt-4 border-t border-gray-100">
+                      <div className="flex items-center space-x-2 text-sm text-gray-400 group-hover:text-blue-500 transition-colors duration-300">
+                        <Sparkles className="h-4 w-4" />
+                        <span>Ready to use</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -591,7 +642,7 @@ const Index = () => {
             <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-blue-700 bg-clip-text text-transparent">
               Loved by Teams Worldwide
             </h2>
-            <p className="text-xl text-gray-600">See what other teams are saying about FlowMate</p>
+            <p className="text-xl text-gray-600">See what other teams are saying about FlowMate. <br /> ⭐ Rated 4.9/5 by 10,000+ teams</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
@@ -704,14 +755,20 @@ const Index = () => {
                 Supports Jira & Trello, with Slack & more integrations coming soon.
               </p>
               <div className="flex space-x-4">
-                <div className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors cursor-pointer">
-                  <span className="text-sm">TW</span>
+                <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors cursor-pointer">
+                  <Link to={"https://x.com/flomate_ai?s=11"}>
+                    <img src={"/x.png"} alt="Checkout our twitter account" />
+                  </Link>
                 </div>
-                <div className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors cursor-pointer">
-                  <span className="text-sm">LI</span>
+                <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors cursor-pointer">
+                  <Link to={"https://www.linkedin.com/company/flow-mate/"}>
+                    <img src={"/linkedin.png"} alt="Checkout our linkedin account" />
+                  </Link>
                 </div>
-                <div className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors cursor-pointer">
-                  <span className="text-sm">GH</span>
+                <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors cursor-pointer">
+                  <Link to={"https://www.instagram.com/flowmate_ai?igsh=emRiY2k2N2lvZW40"}>
+                    <img src={"/insta.png"} alt="Checkout our instagram account" />
+                  </Link>
                 </div>
               </div>
             </div>

@@ -34,7 +34,7 @@ export default function Navbar() {
                             className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
                             onClick={() => setIsModalOpen(true)}
                         >
-                            Join Beta Test
+                            Beta Test
                         </Button>
                     </div>
                     <BetaSignupModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
