@@ -15,10 +15,10 @@ export default function Navbar() {
                 <div className="container mx-auto px-4 py-4 flex justify-between items-center">
                     <div className="flex items-center space-x-3 group">
                         <Link to={"/"}>
-                            <img src="/logo.png" alt="FlowMate's logo" className="w-36 h-7 md:w-48 " />
+                            <img src="/logo.png" alt="FlowMate's logo" className="w-36 h-7 md:w-40 " />
                         </Link>
                     </div>
-                    <nav className="hidden md:flex space-x-8 text-sm">
+                    <nav className="hidden md:flex space-x-8 text-lg">
                         <a href="#features" className="text-gray-600 hover:text-blue-600 transition-colors duration-200 hover:scale-105 transform">Features</a>
                         <a href="#teams" className="text-gray-600 hover:text-blue-600 transition-colors duration-200 hover:scale-105 transform ">For Teams</a>
                         <a href="#pricing" className="text-gray-600 hover:text-blue-600 transition-colors duration-200 hover:scale-105 transform">Pricing</a>
@@ -31,10 +31,10 @@ export default function Navbar() {
 
                         <Button
                             size="sm"
-                            className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
+                            className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl text-lg"
                             onClick={() => setIsModalOpen(true)}
                         >
-                            Beta Test
+                           Join Beta Test
                         </Button>
                     </div>
                     <BetaSignupModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />

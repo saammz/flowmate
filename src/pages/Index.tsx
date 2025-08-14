@@ -1,16 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Check, Users, Clock, BarChart3, Zap, Globe, MessageSquare, Target, TrendingUp, Shield, ArrowRight, Sparkles, PlugZap } from "lucide-react";
+import { Check, Users, Clock, BarChart3, Zap, Globe, MessageSquare, Target, TrendingUp, Shield, ArrowRight, Sparkles, PlugZap, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { BetaSignupModal } from "@/components/beta-tester-modal";
 import Navbar from "@/components/navbar";
-import { title } from "process";
+import CalendlyModal from "@/components/calendly";
 
 const Index = () => {
   const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'yearly'>('monthly');
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isCalendlyOpen, setIsCalendlyOpen] = useState(false)
 
   const pricing = {
     symbol: '$',
@@ -190,7 +191,7 @@ const Index = () => {
               <span>WhatsApp Team Collaboration</span>
               {/* <br className="hidden md:block" /> {" "} */}
               <span className="bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
-                Effortless, Real-Time, Robust.
+                - Effortless, Real-Time, Robust.
               </span>
             </h1>
             <p className="md:text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed text-center">
@@ -200,8 +201,8 @@ const Index = () => {
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16 animate-fade-in delay-200">
             <Button
-              size="sm"
-              className="text-lg md:w-64  bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
+              size="lg"
+              className="text-lg md:w-64  py-4  bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
               onClick={() => setIsModalOpen(true)}
             >
               Join Beta Test
@@ -332,7 +333,7 @@ const Index = () => {
 
           <div className="grid gap-8 md:gap-12 max-w-6xl mx-auto">
             {useCases.map((useCase, index) => (
-              <div key={index} className={`relative ${index % 2 === 1 ? 'md:flex-row-reverse' : ''} flex flex-col md:flex-row items-center gap-8 md:gap-12`}>
+              <div key={index} className={`relative ${index % 2 === 1 ? 'md:flex-row-reverse' : ''} flex flex-col md:flex-row items-center gap-8 md:gap-12 justify-between`}>
                 {/* Team Info & Description */}
                 <div className="flex-1 text-center md:text-left">
                   <div className="flex items-center justify-center md:justify-start mb-6">
@@ -497,8 +498,8 @@ const Index = () => {
             <Card className="border-2 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
               <CardHeader className="text-center">
                 <CardTitle className="text-2xl font-bold">Free</CardTitle>
-                <div className="text-4xl font-bold py-6 bg-gradient-to-r from-gray-600 to-gray-800 bg-clip-text text-transparent">
-                  ${formatPrice(pricing.free)}
+                <div className="text-4xl font-bold py-6 bg-gradient-to-r from-gray-600 to-gray-800 bg-clip-text text-transparent ">
+                  {/* ${formatPrice(pricing.free)} */} Coming soon
                 </div>
                 <CardDescription className="text-base">Perfect for small teams getting started</CardDescription>
               </CardHeader>
@@ -540,7 +541,7 @@ const Index = () => {
                 <CardTitle className="text-2xl font-bold">Pro</CardTitle>
                 <div className="py-6">
                   <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
-                    {getPriceDisplay(pricing.pro)}
+                    {/* ${formatPrice(pricing.free)} */} Coming soon
                   </div>
                   {billingPeriod === 'yearly' && (
                     <div className="text-sm text-gray-500 mt-2">
@@ -589,7 +590,7 @@ const Index = () => {
                 <CardTitle className="text-2xl font-bold">Enterprise</CardTitle>
                 <div className="py-6">
                   <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-800 to-gray-900 bg-clip-text text-transparent">
-                    {getPriceDisplay(pricing.enterprise)}
+                    {/* ${formatPrice(pricing.free)} */} Coming soon
                   </div>
                   {billingPeriod === 'yearly' && (
                     <div className="text-sm text-gray-500 mt-2">
@@ -721,17 +722,21 @@ const Index = () => {
               Start your free trial today and see the difference in minutes, not months.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Link to="/dashboard">
-                <Button
-                  size="sm"
-                  className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
-                  onClick={() => setIsModalOpen(true)}
-                >
-                  Join Beta Test
-                </Button>
-              </Link>
-              <Button variant="outline" size="lg" className="text-xl px-12 py-4 rounded-xl hover:scale-105 transition-all duration-200 border-2">
-                Schedule a Demo
+              <Button
+                size="lg"
+                className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl text-lg px-12"
+                onClick={() => setIsModalOpen(true)}
+              >
+                Join Beta Test
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                className="text-lg px-10 py-4 rounded-xl hover:scale-105 transition-all duration-200 border-2 hover:border-blue-300 hover:bg-blue-50"
+                onClick={() => setIsCalendlyOpen(true)}
+              >
+                <Calendar className="mr-2 h-5 w-5" />
+                Schedule Demo
               </Button>
             </div>
             <p className="text-sm text-gray-500 mt-8">No credit card required • Setup in under 2 minutes • Cancel anytime</p>
@@ -745,9 +750,6 @@ const Index = () => {
           <div className="grid md:grid-cols-5 gap-8 mb-12">
             <div className="md:col-span-2">
               <div className="flex items-center space-x-3 mb-6">
-                {/* <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-green-600 rounded-xl flex items-center justify-center">
-                  <span className="text-white font-bold">PB</span>
-                </div> */}
                 <span className="text-2xl font-bold">FlowMate</span>
               </div>
               <p className="text-gray-400 text-lg leading-relaxed mb-6">
@@ -810,6 +812,7 @@ const Index = () => {
 
       </footer>
       <BetaSignupModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <CalendlyModal isOpen={isCalendlyOpen} onClose={() => setIsCalendlyOpen(false)} />
     </div>
   );
 };
