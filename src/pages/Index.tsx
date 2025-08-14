@@ -191,7 +191,7 @@ const Index = () => {
               <span>WhatsApp Team Collaboration</span>
               {/* <br className="hidden md:block" /> {" "} */}
               <span className="bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
-                - Effortless, Real-Time, Robust.
+                Effortless, Real-Time, Robust.
               </span>
             </h1>
             <p className="md:text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed text-center">

@@ -21,6 +21,7 @@ export default {
 		extend: {
 			fontFamily: {
 				'sans': ['Martian Mono', 'monospace'],
+				roboto: ['Roboto', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
